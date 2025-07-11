@@ -3,14 +3,14 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 const trendingTopics = [
-  'English Speaking',
-  'Basic Grammar',
-  'IELTS Preparation',
-  'Basic Grammar',
-  'IELTS Preparation',
+  'React Development',
+  'Python Programming',
+  'Web Development',
+  'Machine Learning',
+  'Mobile Apps',
 ];
 
-const HeroSection = () => {
+const SearchBox = () => {
   return (
     <section className="bg-[#f7f2ed] px-4 text-center">
       <div className="mx-auto mt-6 flex w-full max-w-md overflow-hidden rounded-md border border-blue-300 bg-white shadow-md">
@@ -41,4 +41,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default SearchBox;

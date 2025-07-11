@@ -3,12 +3,12 @@ import AnimatedTypewriter from './Typewriter';
 
 const MarketingSection = () => {
   const words = [
-    'English',
-    'Spanish',
-    'French',
-    'German',
-    'Italian',
-    'Japanese',
+    'React',
+    'Python',
+    'JavaScript',
+    'Node.js',
+    'Flutter',
+    'Machine Learning',
   ];
   return (
     <section className="relative flex h-[80vh] w-full items-start justify-center gap-6 overflow-hidden bg-[#f7f2ed] pt-14 pb-14">
@@ -22,10 +22,10 @@ const MarketingSection = () => {
         </div>
       </div>
       <div className="flex h-full flex-shrink grow flex-col items-center justify-between">
-        <div className="max-w-[704px] text-center text-5xl font-medium">
+        <div className="max-w-[704px] text-center text-5xl font-medium min-h-[150px]">
           <h2>
-            Trust the nation's largest network for{' '}
-            <AnimatedTypewriter words={words} /> tutors
+            Học lập trình với{' '}
+            <AnimatedTypewriter words={words} /> từ chuyên gia
           </h2>
         </div>
         <div className="w-full">
@@ -43,7 +43,7 @@ const MarketingSection = () => {
               <path d="M0 11L11 0L22 11L11 22L0 11Z" fill="#B1D15D"></path>
             </svg>
             <span>
-              More than <strong>4 million 5-star reviews</strong>
+              Hơn <strong>50,000+ học viên</strong> đã hoàn thành khóa học
             </span>
           </li>
           <li className="flex items-start gap-2 text-center md:flex-col md:items-center md:text-xl">
@@ -57,7 +57,7 @@ const MarketingSection = () => {
               <path d="M0 11L11 0L22 11L11 22L0 11Z" fill="#F9B040"></path>
             </svg>
             <span>
-              <strong>65,000 expert tutors</strong> in 300+ subjects
+              <strong>100+ khóa học</strong> từ cơ bản đến nâng cao
             </span>
           </li>
           <li className="flex items-start gap-2 text-center md:flex-col md:items-center md:text-xl">
@@ -71,7 +71,7 @@ const MarketingSection = () => {
               <path d="M0 11L11 0L22 11L11 22L0 11Z" fill="#60AD56"></path>
             </svg>
             <span>
-              Find a great match with our <strong>Good Fit Guarantee</strong>
+              <strong>Cam kết hoàn tiền</strong> nếu không hài lòng
             </span>
           </li>
         </ul>

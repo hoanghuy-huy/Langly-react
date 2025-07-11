@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useFavorites } from '@/contexts/FavoriteContext';
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { favorites } = useFavorites();
 
   const navList: string[] = [
     'Find a teacher',
@@ -43,6 +45,17 @@ const Header = () => {
             </button>
 
             <div className="hidden items-center gap-x-4 md:flex">
+              <Link
+                to="/favorite"
+                className="relative text-hover-effect hover-effect cursor-pointer p-2"
+              >
+                <Heart size={20} />
+                {favorites.length > 0 && (
+                  <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                    {favorites.length}
+                  </span>
+                )}
+              </Link>
               <div className="text-hover-effect hover-effect cursor-pointer">
                 Login
               </div>

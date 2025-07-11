@@ -1,35 +1,38 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes } from './routes';
 import { DefaultLayout } from './layouts';
+import { FavoriteProvider } from './contexts/FavoriteContext';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          {publicRoutes.map((route, index) => {
-            const Page = route.component;
-            let Layout = DefaultLayout;
+    <FavoriteProvider>
+      <Router>
+        <div className="App">
+          <Routes>
+            {publicRoutes.map((route, index) => {
+              const Page = route.component;
+              let Layout = DefaultLayout;
 
-            if (route.layout) {
-              Layout = route.layout;
-            }
+              if (route.layout) {
+                Layout = route.layout;
+              }
 
-            return (
-              <Route
-                key={index}
-                path={route.path}
-                element={
-                  <Layout>
-                    <Page />
-                  </Layout>
-                }
-              />
-            );
-          })}
-        </Routes>
-      </div>
-    </Router>
+              return (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  }
+                />
+              );
+            })}
+          </Routes>
+        </div>
+      </Router>
+    </FavoriteProvider>
   );
 }
 
