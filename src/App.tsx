@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes } from './routes';
 import { DefaultLayout } from './layouts';
 import { FavoriteProvider } from './contexts/FavoriteContext';
+import { Toaster } from "@/components/ui/sonner"
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      <Toaster position="top-right" />
     </FavoriteProvider>
   );
 }

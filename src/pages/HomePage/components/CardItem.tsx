@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Heart, Clock, User, Star } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useFavorites } from '@/contexts/FavoriteContext';
+import { saveToViewHistory } from '@/services/viewHistoryService';
 
 type Course = {
   image: string;
@@ -13,6 +14,7 @@ type Course = {
   instructor: string;
   duration: string;
   level: string;
+  viewedAt?: string; // Timestamp khi xem
 };
 
 interface CourseCardPreviewProps {
@@ -33,6 +35,16 @@ const CardItem = ({ course, onViewDetail }: CourseCardPreviewProps) => {
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     toggleFavorite(course);
+  };
+
+    const handleViewDetail = () => {
+    // Lưu vào lịch sử xem
+    saveToViewHistory(course);
+
+    // Gọi callback gốc
+    if (onViewDetail) {
+      onViewDetail(course);
+    }
   };
 
   return (
@@ -105,7 +117,7 @@ const CardItem = ({ course, onViewDetail }: CourseCardPreviewProps) => {
           <Button
             variant="outline"
             className="w-full cursor-pointer text-sm hover:bg-[var(--primary-color)] hover:text-white"
-            onClick={() => onViewDetail && onViewDetail(course)}
+            onClick={handleViewDetail}
           >
             Xem chi tiết
           </Button>

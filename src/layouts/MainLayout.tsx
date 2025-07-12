@@ -1,4 +1,5 @@
 import Header from '@/components/coreUI/Header';
+import { Toaster } from '@/components/ui/sonner';
 import type React from 'react';
 
 type MainLayoutProps = {
@@ -11,6 +12,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
       <Header />
       <main>{children}</main>
       <footer></footer>
+
     </div>
   );
 }

@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+
 :root {
   --hight-header: 72px;
   --primary-color: #f36f25;

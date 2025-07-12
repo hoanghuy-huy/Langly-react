@@ -239,7 +239,7 @@ const MainSection = () => {
               placeholder="Tìm kiếm khóa học, giảng viên..."
               value={searchTerm}
               onChange={(e) => handleSearch(e.target.value)}
-              className="pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:border-transparent bg-white placeholder:text-gray-400"
+              className="pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:border-transparent bg-white placeholder:text-gray-400 "
             />
             <svg
               className="absolute left-3 top-2.5 h-4 w-4 text-gray-400 pointer-events-none"
@@ -258,7 +258,7 @@ const MainSection = () => {
           <div className="w-full sm:w-48 flex flex-col gap-1">
             <label className="mb-1 text-xs font-medium text-gray-600 ml-1">Khoảng giá</label>
             <Select value={selectedPriceRange} onValueChange={handlePriceRangeClick}>
-              <SelectTrigger className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium shadow-sm focus:border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)] flex items-center gap-2">
+              <SelectTrigger className="w-full rounded-lg border border-gray-300 bg-white px-4 py-4 text-sm font-medium shadow-sm focus:border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)] flex items-center gap-2 min-w-[200px]">
                 <Tag className="mr-2 h-4 w-4 text-[var(--primary-color)]" />
                 <SelectValue placeholder="Tất cả mức giá" />
               </SelectTrigger>

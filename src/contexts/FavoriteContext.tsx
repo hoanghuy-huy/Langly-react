@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { toast } from 'sonner';
 
 type Course = {
   image: string;
@@ -52,6 +53,7 @@ export const FavoriteProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setFavorites(prev => {
       const exists = prev.some(fav => fav.name === course.name);
       if (!exists) {
+        toast.success('Đã thêm vào yêu thích!');
         return [...prev, course];
       }
       return prev;
@@ -60,6 +62,7 @@ export const FavoriteProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const removeFromFavorites = (courseName: string) => {
     setFavorites(prev => prev.filter(fav => fav.name !== courseName));
+    toast.success('Đã bỏ khỏi yêu thích!');
   };
 
   const isFavorite = (courseName: string) => {
