@@ -53,11 +53,14 @@ export const FavoriteProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setFavorites(prev => {
       const exists = prev.some(fav => fav.name === course.name);
       if (!exists) {
-        toast.success('Đã thêm vào yêu thích!');
         return [...prev, course];
       }
       return prev;
     });
+    // Kiểm tra lại sau khi setFavorites (bằng local state hoặc callback)
+    if (!favorites.some(fav => fav.name === course.name)) {
+      toast.success('Đã thêm vào yêu thích!');
+    }
   };
 
   const removeFromFavorites = (courseName: string) => {

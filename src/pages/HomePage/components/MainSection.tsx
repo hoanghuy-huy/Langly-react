@@ -10,8 +10,10 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/ui/select';
-import { Tag } from 'lucide-react';
+import { Tag, Sparkles, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { useFavorites } from '@/contexts/FavoriteContext';
+import { getViewHistory } from '@/services/viewHistoryService';
 
 type Course = {
   image: string;
@@ -157,6 +159,12 @@ const MainSection = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [openModal, setOpenModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const { favorites } = useFavorites();
+  const [openSuggestModal, setOpenSuggestModal] = useState(false);
+  const [suggestions, setSuggestions] = useState<Course[]>([]);
+  const [suggestLoading, setSuggestLoading] = useState(false);
+  const [suggestPage, setSuggestPage] = useState(1);
+  const SUGGEST_PAGE_SIZE = 2;
 
   const handleViewMore = () => {
     setLoading(true);
@@ -196,6 +204,38 @@ const MainSection = () => {
     setOpenModal(true);
   };
 
+  // Simulate API call for suggestions
+  const handleSuggestClick = () => {
+    setSuggestLoading(true);
+    setOpenSuggestModal(true);
+    setTimeout(() => {
+      // Simulate userId = 'xxx', get favorites and view history
+      const viewed = getViewHistory();
+      let suggested: Course[] = [];
+      if (favorites.length > 0 || viewed.length > 0) {
+        // Merge and dedupe by name
+        const all = [...favorites, ...viewed];
+        const seen = new Set<string>();
+        suggested = all.filter((c) => {
+          if (seen.has(c.name)) return false;
+          seen.add(c.name);
+          return true;
+        });
+      } else {
+        suggested = courses.slice(0, 2);
+      }
+      setSuggestions(suggested);
+      setSuggestPage(1);
+      setSuggestLoading(false);
+    }, 1200);
+  };
+
+  const paginatedSuggestions = suggestions.slice(
+    (suggestPage - 1) * SUGGEST_PAGE_SIZE,
+    suggestPage * SUGGEST_PAGE_SIZE
+  );
+  const totalSuggestPages = Math.ceil(suggestions.length / SUGGEST_PAGE_SIZE) || 1;
+
     const filteredCourses = courses.filter((course) => {
     const matchesCategory = selectedCategory === 'All' || course.category === selectedCategory;
 
@@ -230,8 +270,7 @@ const MainSection = () => {
         <h2 className="mb-4 text-2xl font-semibold text-gray-800">
           Khóa học lập trình nổi bật
         </h2>
-
-        {/* Search Bar + Price Dropdown */}
+        {/* Search Bar + Price Dropdown + Suggest Button */}
         <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end">
           <div className="relative max-w-md flex-1">
             <Input
@@ -255,7 +294,7 @@ const MainSection = () => {
               />
             </svg>
           </div>
-          <div className="w-full sm:w-48 flex flex-col gap-1">
+          <div className="w-full sm:w-48 flex flex-col gap-1 mr-2 cursor-pointer">
             <label className="mb-1 text-xs font-medium text-gray-600 ml-1">Khoảng giá</label>
             <Select value={selectedPriceRange} onValueChange={handlePriceRangeClick}>
               <SelectTrigger className="w-full rounded-lg border border-gray-300 bg-white px-4 py-4 text-sm font-medium shadow-sm focus:border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)] flex items-center gap-2 min-w-[200px]">
@@ -278,6 +317,13 @@ const MainSection = () => {
               </SelectContent>
             </Select>
           </div>
+          <Button
+            onClick={handleSuggestClick}
+            className="mt-2 sm:mt-0 sm:ml-4 flex items-center gap-2 rounded-sm shadow-lg bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white font-semibold text-base px-6 py-3 transition-all duration-200 mr-2 cursor-pointer"
+          >
+            <Sparkles className="h-5 w-5 text-white drop-shadow" />
+            Gợi ý sản phẩm phù hợp
+          </Button>
         </div>
 
         <div className="mb-6 flex flex-wrap gap-2">
@@ -300,11 +346,18 @@ const MainSection = () => {
         {loading ? (
           <MainSectionSkeleton count={4} />
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-            {visibleCourses.map((course, index) => (
-              <CardItem key={index} course={course} onViewDetail={handleViewDetail} />
-            ))}
-          </div>
+          visibleCourses.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16">
+              <Search className="w-16 h-16 text-gray-300 mb-4" />
+              <div className="text-center text-gray-500 text-lg font-medium">Không tìm thấy khóa học nào.</div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+              {visibleCourses.map((course, index) => (
+                <CardItem key={index} course={course} onViewDetail={handleViewDetail} />
+              ))}
+            </div>
+          )
         )}
 
         {!loading && visibleCount < filteredCourses.length && (
@@ -346,6 +399,57 @@ const MainSection = () => {
           <DialogClose asChild>
             <Button variant="outline" className="mt-4 w-full cursor-pointer hover:bg-[var(--primary-color)] hover:text-white">Đóng</Button>
           </DialogClose>
+        </DialogContent>
+      </Dialog>
+      {/* Suggestion Modal */}
+      <Dialog open={openSuggestModal} onOpenChange={setOpenSuggestModal}>
+        <DialogContent className="bg-white max-w-2xl w-full sm:w-[90vw] max-w-[95vw] p-2 sm:p-6 max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Gợi ý sản phẩm phù hợp</DialogTitle>
+            <DialogDescription>
+             Những khóa học bạn có thể quan tâm
+            </DialogDescription>
+          </DialogHeader>
+          {suggestLoading ? (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {Array.from({ length: SUGGEST_PAGE_SIZE }).map((_, idx) => (
+                <CardItem.Skeleton key={idx} />
+              ))}
+            </div>
+          ) : suggestions.length === 0 ? (
+            <div className="text-center text-gray-500 py-8">Không có gợi ý nào.</div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {paginatedSuggestions.map((course, idx) => (
+                  <CardItem key={course.name + idx} course={course} onViewDetail={handleViewDetail} />
+                ))}
+              </div>
+              {suggestions.length > SUGGEST_PAGE_SIZE && (
+                <div className="flex flex-col sm:flex-row justify-between items-center mt-4 gap-2">
+                  <Button
+                    variant="outline"
+                    disabled={suggestPage === 1}
+                    onClick={() => setSuggestPage((p) => Math.max(1, p - 1))}
+                    className={`w-full sm:w-auto transition-colors duration-150 cursor-pointer disabled:cursor-not-allowed hover:bg-[var(--primary-color)] hover:text-white`}
+                  >
+                    Trang trước
+                  </Button>
+                  <span className="text-center w-full sm:w-auto">
+                    Trang {suggestPage} / {totalSuggestPages}
+                  </span>
+                  <Button
+                    variant="outline"
+                    disabled={suggestPage === totalSuggestPages}
+                    onClick={() => setSuggestPage((p) => Math.min(totalSuggestPages, p + 1))}
+                    className={`w-full sm:w-auto transition-colors duration-150 cursor-pointer disabled:cursor-not-allowed hover:bg-[var(--primary-color)] hover:text-white`}
+                  >
+                    Trang sau
+                  </Button>
+                </div>
+              )}
+            </>
+          )}
         </DialogContent>
       </Dialog>
     </div>
