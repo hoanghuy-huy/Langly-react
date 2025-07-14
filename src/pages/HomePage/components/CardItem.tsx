@@ -66,6 +66,9 @@ const CardItem = ({ course, onViewDetail }: CourseCardPreviewProps) => {
                 : 'bg-white/80 hover:bg-red-500 hover:text-white'
             }`}
             onClick={handleFavoriteClick}
+            tabIndex={0}
+            role="button"
+            aria-label="Yêu thích"
           >
             <Heart size={16} className={isFavorite(course.name) ? 'fill-current' : ''} />
           </div>

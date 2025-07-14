@@ -14,6 +14,7 @@ import { Tag, Sparkles, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useFavorites } from '@/contexts/FavoriteContext';
 import { getViewHistory } from '@/services/viewHistoryService';
+import { Chatbot } from './index';
 
 type Course = {
   image: string;
@@ -204,16 +205,13 @@ const MainSection = () => {
     setOpenModal(true);
   };
 
-  // Simulate API call for suggestions
   const handleSuggestClick = () => {
     setSuggestLoading(true);
     setOpenSuggestModal(true);
     setTimeout(() => {
-      // Simulate userId = 'xxx', get favorites and view history
       const viewed = getViewHistory();
       let suggested: Course[] = [];
       if (favorites.length > 0 || viewed.length > 0) {
-        // Merge and dedupe by name
         const all = [...favorites, ...viewed];
         const seen = new Set<string>();
         suggested = all.filter((c) => {
@@ -365,13 +363,15 @@ const MainSection = () => {
             <Button
               variant="outline"
               onClick={handleViewMore}
-              className="hover:bg-[var(--primary-color)] hover:text-white"
+              className="hover:bg-[var(--primary-color)] hover:text-white cursor-pointer"
             >
               Xem thêm khóa học
             </Button>
           </div>
         )}
       </div>
+
+      <Chatbot />
 
       <Dialog open={openModal} onOpenChange={setOpenModal}>
         <DialogContent className="max-w-2xl bg-white">

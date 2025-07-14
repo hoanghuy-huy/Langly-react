@@ -18,7 +18,7 @@ const SearchBox = () => {
           className="flex-1 rounded-none border-0 px-4 py-2 text-sm focus-visible:ring-0 focus-visible:ring-offset-0"
           placeholder="What would you like to learn?"
         />
-        <button className="flex items-center justify-center bg-[#f36f25] px-4 text-white">
+        <button className="flex items-center justify-center bg-[#f36f25] px-4 text-white cursor-pointer">
           <Search size={18} />
         </button>
       </div>
@@ -30,7 +30,7 @@ const SearchBox = () => {
             <Button
               key={i}
               size={'sm'}
-              className="inline-block rounded-full bg-[#e9dfd7] px-3 py-1 text-xs text-gray-800 hover:text-white"
+              className="inline-block rounded-full bg-[#e9dfd7] px-3 py-1 text-xs text-gray-800 hover:text-white cursor-pointer"
             >
               {topic}
             </Button>

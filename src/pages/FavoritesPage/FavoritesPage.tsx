@@ -9,7 +9,6 @@ const FavoritesPage = () => {
   const navigate = useNavigate();
 
   const handleViewDetail = (course: any) => {
-    // Có thể thêm logic để mở modal hoặc navigate đến trang chi tiết
     console.log('View detail:', course);
   };
 
@@ -20,14 +19,13 @@ const FavoritesPage = () => {
   return (
     <div className="min-h-screen w-full bg-gray-100 py-6">
       <div className="px-5 md:px-10 lg:px-20">
-        {/* Header */}
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate(-1)}
-              className="p-2"
+              className="p-2 cursor-pointer"
             >
               <ArrowLeft size={20} />
             </Button>
@@ -45,14 +43,13 @@ const FavoritesPage = () => {
             <Button
               variant="outline"
               onClick={handleRemoveAll}
-              className="text-red-600 hover:bg-red-50"
+              className="text-red-600 hover:bg-red-50 cursor-pointer"
             >
               Xóa tất cả
             </Button>
           )}
         </div>
 
-        {/* Content */}
         {favorites.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20">
             <div className="mb-4 rounded-full bg-gray-100 p-6">
@@ -66,7 +63,7 @@ const FavoritesPage = () => {
             </p>
             <Button
               onClick={() => navigate('/')}
-              className="bg-[var(--primary-color)] text-white hover:bg-[var(--primary-color)]/90"
+              className="bg-[var(--primary-color)] text-white hover:bg-[var(--primary-color)]/90 cursor-pointer"
             >
               Khám phá khóa học
             </Button>
