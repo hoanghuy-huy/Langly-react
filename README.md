@@ -1,3 +1,6 @@
+# Clone Shoppe
+
+**Link dự án:** [https://github.com/hoanghuy-huy/Langly-react.git](https://github.com/hoanghuy-huy/Langly-react.git)
 
 Dự án web bán khóa học, xây dựng với React, TypeScript, Vite, TailwindCSS.
 
@@ -10,8 +13,8 @@ Dự án web bán khóa học, xây dựng với React, TypeScript, Vite, Tailwi
 
 1. **Clone dự án:**
    ```bash
-   git clone <repo-url>
-   cd clone-shoppe
+   git clone https://github.com/hoanghuy-huy/Langly-react.git
+   cd Langly-react
    ```
 
 2. **Cài đặt dependencies:**
