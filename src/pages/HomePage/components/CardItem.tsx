@@ -14,7 +14,7 @@ type Course = {
   instructor: string;
   duration: string;
   level: string;
-  viewedAt?: string; // Timestamp khi xem
+  viewedAt?: string; 
 };
 
 interface CourseCardPreviewProps {

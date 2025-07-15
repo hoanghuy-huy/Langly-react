@@ -268,7 +268,6 @@ const MainSection = () => {
         <h2 className="mb-4 text-2xl font-semibold text-gray-800">
           Khóa học lập trình nổi bật
         </h2>
-        {/* Search Bar + Price Dropdown + Suggest Button */}
         <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end">
           <div className="relative max-w-md flex-1">
             <Input
@@ -401,7 +400,7 @@ const MainSection = () => {
           </DialogClose>
         </DialogContent>
       </Dialog>
-      {/* Suggestion Modal */}
+
       <Dialog open={openSuggestModal} onOpenChange={setOpenSuggestModal}>
         <DialogContent className="bg-white max-w-2xl w-full sm:w-[90vw] max-w-[95vw] p-2 sm:p-6 max-h-[90vh] overflow-y-auto">
           <DialogHeader>

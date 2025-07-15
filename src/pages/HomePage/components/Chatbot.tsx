@@ -72,7 +72,7 @@ function getBotReply(userInput: string) {
 const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState('');
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
